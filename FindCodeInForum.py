@@ -35,11 +35,16 @@ if items:
                 c.append(['json',code.getText()])
         if c:
             cb = dialogs.edit_list_dialog('Codeblocks', c)
-            file = open(filename, 'a')          # append/create file
-            for c in cb:
-                file.write(c[1])
-                file.write('#--------------------\n')    #seperator for different code blocks
-            file.close()
-            print 'File ' + filename + ' is created.'
+            if savefile:
+                file = open(filename, 'a')          # append/create file
+                for c in cb:
+                    file.write(c[1])
+                    file.write('--------------------\n')    #seperator for different code blocks
+                file.close()
+                print 'File ' + filename + ' is created.'
+            else:
+                for c in cb:
+                    print c[1]
+                    print '--------------------\n'    #seperator for different code blocks
         else:
             print 'Sorry nothing found.'
