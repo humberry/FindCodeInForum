@@ -1,11 +1,12 @@
 # coding: utf-8
 import dialogs, bs4, urllib2
 
-field_url=[{'type':'url', 'key':'url', 'value':'http://forum.omz-software.com/topic/2775/cloud-import', 'title':'URL:'}]
-field_filter=[{'type':'switch', 'key':'python', 'value':True, 'title':'python'},
+field_url=[{'type':'url', 'key':'url', 'value':'', 'title':'URL:'}]
+field_filter=[{'type':'switch', 'key':'python', 'value':False, 'title':'python'},
     {'type':'switch', 'key':'xml', 'value':False, 'title':'xml'},
-    {'type':'switch', 'key':'json', 'value':False, 'title':'json'}]
-fields_file=[{'type':'switch', 'key':'savefile', 'value':False, 'title':'Save as file'},
+    {'type':'switch', 'key':'json', 'value':False, 'title':'json'},
+    {'type':'switch', 'key':'allcode', 'value':True, 'title':'all'}]
+fields_file=[{'type':'switch', 'key':'savefile', 'value':True, 'title':'Save as file'},
     {'type':'text', 'key':'filename', 'value':'sourcecode.txt', 'title':'Filename:'}]
 sections=[('',field_url),('Filter',field_filter),('File',fields_file)]
 items = dialogs.form_dialog(title='FindCodeInForum', fields=None, sections=sections)
@@ -14,6 +15,7 @@ if items:
     cpython = items.get('python')
     cxml = items.get('xml')
     cjson = items.get('json')
+    call = items.get('allcode')
     savefile = items.get('savefile')
     filename = items.get('filename')
     if savefile and filename == '':
@@ -33,6 +35,10 @@ if items:
             alljson = soup.find_all('code','json')
             for code in alljson:
                 c.append(['json',code.getText()])
+        if call:
+            alljson = soup.find_all('code')
+            for code in alljson:
+                c.append(['all',code.getText()])
         if c:
             cb = dialogs.edit_list_dialog('Codeblocks', c)
             if savefile:
