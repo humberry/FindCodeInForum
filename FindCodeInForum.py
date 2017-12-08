@@ -1,5 +1,5 @@
 # coding: utf-8
-import dialogs, bs4, urllib2
+import dialogs, bs4, urllib.request
 
 field_url=[{'type':'url', 'key':'url', 'value':'', 'title':'URL:'}]
 field_filter=[{'type':'switch', 'key':'python', 'value':False, 'title':'python'},
@@ -22,7 +22,7 @@ if items:
         print 'Please type in a valid filename!'
     else:
         c = []
-        soup = bs4.BeautifulSoup(urllib2.urlopen(url).read())
+        soup = bs4.BeautifulSoup(urllib.request.urlopen(url).read())
         if cpython:
             allpython = soup.find_all('code','python')
             for code in allpython:
