@@ -1,3 +1,4 @@
+#! python3
 # coding: utf-8
 import dialogs, bs4, urllib.request
 
